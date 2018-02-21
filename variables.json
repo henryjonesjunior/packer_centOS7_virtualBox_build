@@ -1,0 +1,10 @@
+{
+	"user_iso": "/PATH/TO/CentOS-7-x86_64-Minimal-1708.iso",
+	"user_checksum": "bba314624956961a2ea31dd460cd860a77911c1e0a56e4820a12b9c5dad363f5",
+  "vbox_guest_additions_path": "/Applications/VirtualBox.app/Contents/MacOS/VBoxGuestAdditions.iso",
+	"build_name": "YOURNAME/CentOS-7-minimal",
+	"version": "1.0.0",
+	"vm_name": "CentOS-7-1708",
+	"box_name": "CentOS-7-1708-Minimal(1.0.0).box",
+  "headless": "true"
+}

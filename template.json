@@ -1,0 +1,58 @@
+{
+	"variables": {
+		"user_iso": "",
+		"user_checksum": "",
+		"vm_name": "",
+		"box_name": "",
+    "headless": ""
+},
+
+	"builders": [
+		{
+			"vm_name": "{{ user `vm_name` }}",
+		  "guest_os_type": "RedHat_64",
+      "hard_drive_interface": "sata",
+		  "type": "virtualbox-iso",
+		  "http_directory": "./http/",
+			"iso_url": "{{ user `user_iso` }}",
+			"iso_checksum": "{{ user `user_checksum` }}",
+			"iso_checksum_type": "sha256",
+			"ssh_username": "vagrant",
+			"ssh_password": "vagrant",
+			"ssh_wait_timeout": "3000s",
+			"headless": "{{ user `headless` }}",
+			"disk_size": "10000",
+			"vboxmanage": [
+				["modifyvm", "{{.Name}}", "--memory", "512"],
+				["modifyvm", "{{.Name}}", "--cpus", "1"],
+				["modifyvm", "{{.Name}}", "--usb", "off"],
+				["modifyvm", "{{.Name}}", "--audio", "none"]
+			],
+				"boot_command": [
+					"<tab> text append inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+				],
+				"shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now"
+		}
+	],
+
+	"provisioners": [
+		{
+			"type": "shell",
+			"scripts": [
+				"scripts/virtualbox.sh",
+				"scripts/vagrant_keys.sh",
+				"scripts/cleanup.sh",
+				"scripts/zero_out.sh"
+			],
+			"execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
+		}
+	],
+
+	"post-processors": [
+		[{
+			"type": "vagrant",
+			"compression_level": 9,
+			"output": "{{ user `box_name` }}"
+		}]
+	]
+}
