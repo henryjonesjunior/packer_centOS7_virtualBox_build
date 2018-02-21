@@ -1,14 +1,14 @@
 # CentOS 7 Minimal Packer Build Vagrant/VirtualBox
 ### Description
-Packer build for CentOS-7 minimal Vagrant/VirtualBox.
+Use this template to create a minimal CentOS 7 Vagrant box for use with the VirtualBox provider.
 
-Set user variables in a local JSON file.  Pass these variables to the build via the "-var-file=" flag. For example:
+Set user variables in `variables.json`.  Pass these variables to the build via the "-var-file=" flag. For example:
 ```command
 $ packer build -var-file=variables.json template.json
 ```
 See the packer documentation for more information.
 
-### Grab this box from Atlas
+### Download a version of this box using `vagrant`
 ```command
 $ vagrant init mjp182/CentOS_7
 ```
